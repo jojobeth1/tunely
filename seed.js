@@ -15,3 +15,4 @@ db.Album.remove({}, function(err, albums){
     process.exit();
   });
 });
+  
