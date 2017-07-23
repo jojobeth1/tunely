@@ -7,13 +7,14 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jojobeth1/tunely.git"
   },
-  "author": "",
+  "author": "Joanne Cabling",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/jojobeth1/tunely/issues"
@@ -23,5 +24,6 @@
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "mongoose": "^4.11.3"
-  }
+  },
+  "devDependencies": {}
 }
