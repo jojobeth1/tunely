@@ -18,10 +18,11 @@ app.get('/api', controllers.api.index);
 //Returns index page
 app.get('/', function homepage (req, res){
   res.sendFile('views/index.html', {root: __dirname});
-  console.log(__dirname);
+  console.log("directory is working");
 });
 
-
+//Albums
+app.get('/api/albums', controllers.albums.index);
 
 /* *********
  LISTENING
