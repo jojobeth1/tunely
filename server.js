@@ -1,7 +1,7 @@
 var express = require('express'),
   app = express();
 
-//app.use(express.static('public'));
+app.use(express.static('public'));
 
 //var db = require('./models');
 
@@ -11,9 +11,16 @@ var express = require('express'),
 
 
   // ROUTES
+//  app.get('/', function(req, res){
+//   res.send('hello world');
+//  });
+
   app.get('/', function homepage (req, res){
     res.sendFile('views/index.html', {root: __dirname});
+    console.log(__dirname);
   });
+
+
 
 
 app.listen(process.env.PORT || 3000, function(){
