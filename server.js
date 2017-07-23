@@ -3,7 +3,7 @@ var express = require('express'),
 
 app.use(express.static('public'));
 
-//var db = require('./models');
+var db = require('./models');
 
 //var controllers = require('./controllers');
 
