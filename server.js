@@ -13,26 +13,38 @@ app.use(bodyParser.urlencoded({ extended: true }));
 var controllers = require('./controllers');
 
 
-/* *********
-  ROUTES
-********* */
+/**********
+ * ROUTES *
+ **********/
 
-//API json view index
-app.get('/api', controllers.api.index);
+/*
+ * HTML Endpoints
+ */
 
-//Returns index page
-app.get('/', function homepage (req, res){
-  res.sendFile('views/index.html', {root: __dirname});
-  console.log("directory is working");
+app.get('/', function homepage (req, res) {
+  res.sendFile(__dirname + '/views/index.html');
 });
 
-//Albums
+
+/*
+ * JSON API Endpoints
+ */
+
+app.get('/api', controllers.api.index);
+
 app.get('/api/albums', controllers.albums.index);
 
+app.get('/api/albums/:albumId', controllers.albums.show);
 app.post('/api/albums', controllers.albums.create);
-/* *********
- LISTENING
-********* */
-app.listen(process.env.PORT || 3000, function(){
-  console.log('Express server is running on localhost: 3000/ is working');
+app.post('/api/albums/:albumId/songs', controllers.albumsSongs.create);
+
+
+
+/**********
+ * SERVER *
+ **********/
+
+// listen on port 3000
+app.listen(process.env.PORT || 3000, function () {
+  console.log('Express server is running on http://localhost:3000/');
 });

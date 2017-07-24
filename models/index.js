@@ -5,4 +5,4 @@ var Album = require('./album');
 var Song = require('./album');
 
 module.exports.Album = Album;
-module.exports.Song = Song;
+module.exports.Song = require('./song');
