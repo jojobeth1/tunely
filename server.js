@@ -1,9 +1,14 @@
-var express = require('express'),
-  app = express();
+// SERVER-SIDE JAVASCRIPT
 
-app.use(express.static('public'));
+//require express in our app
+var express = require('express');
+// generate a new express app and call it 'app'
+var app = express();
+var bodyParser = require('body-parser');
 
-var db = require('./models');
+// serve static files from public folder
+app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 var controllers = require('./controllers');
 
@@ -24,6 +29,7 @@ app.get('/', function homepage (req, res){
 //Albums
 app.get('/api/albums', controllers.albums.index);
 
+app.post('/api/albums', controllers.albums.create);
 /* *********
  LISTENING
 ********* */

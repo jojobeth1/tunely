@@ -7,7 +7,22 @@ $(document).ready(function() {
     url: '/api/albums',
     success: renderMultipleAlbums
   });
+
+  $('#album-form form').on('submit', function(e) {
+      e.preventDefault();
+      var formData = $(this).serialize();
+      console.log('formData', formData);
+      $.post('/api/albums', formData, function(album) {
+        console.log('album after POST', album);
+        renderAlbum(album);  //render the server's response
+      });
+      $(this).trigger("reset");
+    });
+
 });
+
+
+
 
 function renderMultipleAlbums(albums) {
   albums.forEach(function(album) {
