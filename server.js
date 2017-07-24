@@ -1,6 +1,3 @@
-// SERVER-SIDE JAVASCRIPT
-
-//require express in our app
 var express = require('express');
 // generate a new express app and call it 'app'
 var app = express();
@@ -33,10 +30,11 @@ app.get('/', function homepage (req, res) {
 app.get('/api', controllers.api.index);
 
 app.get('/api/albums', controllers.albums.index);
-
 app.get('/api/albums/:albumId', controllers.albums.show);
 app.post('/api/albums', controllers.albums.create);
+app.delete('/api/albums/:albumId', controllers.albums.destroy);
 app.post('/api/albums/:albumId/songs', controllers.albumsSongs.create);
+
 
 /**********
  * SERVER *

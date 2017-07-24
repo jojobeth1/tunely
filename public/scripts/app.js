@@ -1,11 +1,3 @@
-/* CLIENT-SIDE JS
- *
- * You may edit this file as you see fit.  Try to separate different components
- * into functions and objects as needed.
- *
- */
-
-
 $(document).ready(function() {
   console.log('app.js loaded!');
 
@@ -31,7 +23,29 @@ $(document).ready(function() {
 
   // save song modal save button
   $('#saveSong').on('click', handleNewSongSubmit);
+
+  // delete album when its delete button is clicked
+  $('#albums').on('click', '.delete-album', handleDeleteAlbumClick);
+
 });
+
+// when a delete button for an album is clicked
+function handleDeleteAlbumClick(e) {
+  var albumId = $(this).parents('.album').data('album-id');
+  console.log('someone wants to delete album id=' + albumId );
+  $.ajax({
+    url: '/api/albums/' + albumId,
+    method: 'DELETE',
+    success: handleDeleteAlbumSuccess
+  });
+}
+
+// callback after DELETE /api/albums/:id
+function handleDeleteAlbumSuccess(data) {
+  var deletedAlbumId = data._id;
+  console.log('removing the following album from the page:', deletedAlbumId);
+  $('div[data-album-id=' + deletedAlbumId + ']').remove();
+}
 
 function renderMultipleAlbums(albums) {
   albums.forEach(function(album) {
@@ -48,54 +62,49 @@ function renderAlbum(album) {
 
   album.songsHtml = album.songs.map(renderSong).join("");
 
+
   var albumHtml = (`
     <div class="row album" data-album-id="${album._id}">
-
       <div class="col-md-10 col-md-offset-1">
         <div class="panel panel-default">
           <div class="panel-body">
-
-
           <!-- begin album internal row -->
             <div class='row'>
               <div class="col-md-3 col-xs-12 thumbnail album-art">
                 <img src="images/800x800.png" alt="album image">
               </div>
-
               <div class="col-md-9 col-xs-12">
                 <ul class="list-group">
                   <li class="list-group-item">
                     <h4 class='inline-header'>Album Name:</h4>
                     <span class='album-name'>${album.name}</span>
                   </li>
-
                   <li class="list-group-item">
                     <h4 class='inline-header'>Artist Name:</h4>
                     <span class='artist-name'>${album.artistName}</span>
                   </li>
-
                   <li class="list-group-item">
                     <h4 class='inline-header'>Released date:</h4>
                     <span class='album-releaseDate'>${album.releaseDate}</span>
                   </li>
-
                   <li class="list-group-item">
                     <h4 class="inline-header">Songs:</h4>
                     ${album.songsHtml}
                   </li>
-
                 </ul>
               </div>
-
             </div>
             <!-- end of album internal row -->
-
             <div class='panel-footer'>
               <div class='panel-footer'>
                 <button class='btn btn-primary add-song'>Add Song</button>
+                <button class='btn btn-danger delete-album'>Delete Album</button>
               </div>
-
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- end one album -->
   `);
   $('#albums').prepend(albumHtml);
@@ -116,7 +125,6 @@ function handleNewSongSubmit(e) {
   var $modal = $('#songModal');
   var $songNameField = $modal.find('#songName');
   var $trackNumberField = $modal.find('#trackNumber');
-
   // get data from modal fields
   // note the server expects the keys to be 'name', 'trackNumber' so we use those.
   var dataToPost = {
